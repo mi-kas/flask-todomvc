@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>FlaskTodo</title>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='base.css') }}">    
+  </head>
+  <body>
+
+    <div class="container">
+      {% block content %}
+      {% endblock %}
+    </div>
+    
+    <!-- <script src="{{ url_for('static', filename='base.js') }}"></script> -->
+  </body>
+</html>

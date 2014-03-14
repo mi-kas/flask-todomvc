@@ -1,0 +1,69 @@
+{% extends "layout.html" %}
+  
+{% block content %}
+	<section id="todoapp">
+		<header id="header">
+			<h1>todos</h1>
+			<form action="{{ url_for('add_todo') }}" method="post">
+				<input id="new-todo" name="todo" placeholder="What needs to be done?" autofocus>
+			</form>
+		</header>
+		<section id="main">
+            {% if todos|length > 0 %}
+            <form action="{{ url_for('complete_all_todos') }}" method="post">
+                <input type="hidden" name="items_left" value="{{ items_left }}">
+			    <input id="toggle-all" type="checkbox" onclick="this.form.submit();" {% if items_left == 0 %} checked {% endif %}>
+            </form>
+			<label for="toggle-all">Mark all as complete</label>
+            {% endif %}
+			<ul id="todo-list">
+			{% for todo in todos %}
+				<li {% if todo.completed %} class="completed" {% endif %}>
+					<div class="view">
+                        <form action="{{ url_for('complete_todo') }}" method="post">
+                            <input type="hidden" name="id" value="{{ todo._id }}">
+                            <input type="hidden" name="completed" value="{{ todo.completed }}">
+                            <input class="toggle" type="checkbox" name="checkbox" value="{{ todo.completed }}" onclick="this.form.submit();" {% if todo.completed %} checked {% endif %}> <!-- checked -->
+                        </form>
+						<label>{{ todo.title }}</label>
+                        <form action="{{ url_for('delete_todo') }}" method="post">
+                            <input type="hidden" name="id" value="{{ todo._id }}">
+                            <button class="destroy"></button>
+                        </form>
+					</div>
+					<form>
+						<input class="edit">
+					</form>
+				</li>
+			{% endfor %}
+			</ul>
+		</section>
+		<footer id="footer">
+			<span id="todo-count">
+				<strong>{{ items_left }}</strong>
+				{% if items_left > 1 or items_left == 0 %}
+					items left
+				{% else %}
+					item left
+				{% endif %}
+			</span> 
+
+			<ul id="filters">
+				<li>
+					<a href="{{ url_for('show_all') }}" {% if selected == "all" %} class="selected" {% endif %}>All</a>
+				</li>
+				<li>
+					<a href="{{ url_for('show_active') }}" {% if selected == "active" %} class="selected" {% endif %}>Active</a>
+				</li>
+				<li>
+					<a href="{{ url_for('show_completed') }}" {% if selected == "completed" %} class="selected" {% endif %}>Completed<a>
+				</li>
+			</ul>
+            {% if clear_completed > 0 %}
+            <form action="{{ url_for('delete_completed') }}" method="post">
+                <button id="clear-completed">Clear completed ({{ clear_completed }})</button> <!-- show only if completed tasks -->
+            </form>
+            {% endif %}
+		</footer>
+	</section>
+{% endblock %}
