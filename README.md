@@ -1,7 +1,7 @@
 flask-todomvc
 =============
 
-Flask implementation of the TodoMVC project (http://todomvc.com). It uses MongoDB as database and MongoKit as ODM.
+Flask implementation of the TodoMVC project (http://todomvc.com). Additionally the application uses MongoDB as database and MongoKit as ODM.
 
 
 ## Installation
