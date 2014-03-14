@@ -1,6 +1,9 @@
 venv/
 *.py[cod]
 
+#PyCharm
+.idea/
+
 # C extensions
 *.so
 
